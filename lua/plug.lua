@@ -1,4 +1,3 @@
--- [plug.lua]
 
 local fn = vim.fn
 
@@ -11,20 +10,20 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"--depth",
 		"1",
 		"https://github.com/wbthomason/packer.nvim",
-		install_path,
+    install_path,
 	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
+	print("Installing packer close and reopen Neovim")
+	--vim.cmd([[packadd packer.nvim]])
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    autocmd BufWritePost plug.lua source <afile> | PackerSync
   augroup end
-]])
-
+]]
+)
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
@@ -41,15 +40,26 @@ packer.init({
 })
 
 -- Install individual plugins here
-return require('packer').startup(function(use)
+--local use = require('packer').use
+return require('packer').startup(function(use) 
   -- [[ Plugins Go Here ]]
-  use {'wbthomason/packer.nvim'}
+  use { 'wbthomason/packer.nvim' } 
 
+  -- Startup screen
+  use {
+      'startup-nvim/startup.nvim',
+      requires = 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim',
+      config = function()
+      require("startup").setup()
+  end }
+
+    
+  
   use {                                              -- filesystem navigation
     'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons'        -- filesystem icons
+    requires = { 'kyazdani42/nvim-web-devicons' }        -- filesystem icons
   }
-use {
+  use {
     'nvim-lualine/lualine.nvim',                     -- statusline
     requires = {'kyazdani42/nvim-web-devicons',
                 opt = true}
@@ -64,16 +74,28 @@ use {
   end}
 
   use { 'DanilaMihailov/beacon.nvim' }              -- helps to see cursor jump
-  use {("folke/which-key.nvim")}
-  -- colortheme
+
+  --use {("folke/which-key.nvim")}
+  use {
+    "folke/which-key.nvim",
+      config = function()
+      require("which-key").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  end
+}
+  -- colorthemes
   --use {'folke/tokyonight.nvim'}
   use {'navarasu/onedark.nvim'}
  
  -- Completion
   use { 'christianchiarulli/nvim-cmp' }
-  use { 'hrsh7th/cmp-buffer' } -- buffer completions
-  use { 'hrsh7th/cmp-path' } -- path completions
-  use { 'hrsh7th/cmp-cmdline' }-- cmdline completions
+  use { 'hrsh7th/nvim-cmp' }     --replaces old nvim-cmpe
+  use { 'hrsh7th/cmp-buffer' }   -- buffer completions
+  use { 'hrsh7th/cmp-path' }    -- path completions
+  use { 'hrsh7th/cmp-cmdline' } -- cmdline completions
   use { 'saadparwaiz1/cmp_luasnip' } -- snippet completions
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-emoji' }
@@ -93,13 +115,24 @@ use {
         run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     }
 
---end)
---config = {
-  --package_root = vim.fn.stdpath('config') .. '/site/pack'
---}
+--LSP Install and  Config     
+  use {
+    'williamboman/nvim-lsp-installer',
+    'neovim/nvim-lspconfig',
+    }
+  use { 'nvim-lua/completion-nvim' }
+  use { 'nvim-orgmode/orgmode', config = function()
+          require('orgmode').setup{}
+  end
+  }
 
   -- Put this at the end after all plugins
   if packer_bootstrap then
-    require('packer').sync()
+    require('packer').sync() 
   end
 end)
+
+
+
+
+
