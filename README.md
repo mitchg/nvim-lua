@@ -1,5 +1,4 @@
-# Nvim install and configuration for easy maintenance with lua, 
-# and packer as the plugin manager.
+# Nvim install and configuration for easy maintenance with lua, and packer as the plugin manager.
 
 ## Why I am doing this:
 
