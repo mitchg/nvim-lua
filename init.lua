@@ -7,7 +7,6 @@ require('user.vars')      -- Variables
 require('user.opts')      -- Options
 require('user.keys')      -- Keymaps
 require('user.plug')      -- Plugins
---require('which-key')   --whichkey mappings
 
 -- PLUGINS: ADD this section
 require("startup").setup({theme = "startify"})
@@ -17,8 +16,6 @@ require('onedark').setup {
    style = 'deep' 
 }
 require('onedark').load()
- 
---require('tokyonight').load{}
  
 --Status Line
 require('lualine').setup {
@@ -30,8 +27,6 @@ require( 'which-key' ).setup{}
 require( 'nvim-autopairs' ).setup{}
 require( 'telescope')
 require( 'cmp' )
---require('nvim-cmp')
---require('cmp_luasnip')
 
 ---- automatically detect which servers to install (based on which servers are set up via lspconfig)
 require('mason').setup({
