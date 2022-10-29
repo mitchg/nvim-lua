@@ -2,6 +2,7 @@ vim.g.mapleader = "<SPACE>"
 vim.g.localleader = "\\"
 vim.g.completion_enable_snippet = 'snippets.nvim'
 
+--first change for BR1 Branch
 -- IMPORTS
 require('user.vars')      -- Variables
 require('user.opts')      -- Options
