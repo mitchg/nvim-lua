@@ -44,7 +44,7 @@ packer.init({
 return require('packer').startup(function(use) 
   -- [[ Plugins Go Here ]]
   use { 'wbthomason/packer.nvim' } 
-
+  use { 'williamboman/mason.nvim' }
   -- Startup screen
   use {
       'startup-nvim/startup.nvim',
@@ -83,7 +83,7 @@ return require('packer').startup(function(use)
       -- your configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
-    }
+     }
   end
 }
   -- colorthemes
@@ -101,7 +101,10 @@ return require('packer').startup(function(use)
   use { 'hrsh7th/cmp-emoji' }
   use { 'hrsh7th/cmp-nvim-lua' }
 
-
+  -- snippets
+  use { 'L3MON4D3/LuaSnip' } --snippet engine
+  use { 'rafamadriz/friendly-snippets' } -- a bunch of snippets to use
+  use { 'akinsho/bufferline.nvim' }
 -- Git
   use { 'lewis6991/gitsigns.nvim' }
   use { 'kdheepak/lazygit.nvim' }
@@ -112,7 +115,7 @@ return require('packer').startup(function(use)
   use { 'windwp/nvim-autopairs' }
   use {
         'nvim-treesitter/nvim-treesitter',
-        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+        config = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     }
 
 --LSP Install and  Config     
